@@ -13,20 +13,21 @@ dotenv.config({
     path : '.env'
 })
 
-app.use(cors())
+app.use(cors({
+    origin : ["http://localhost:5500"],
+    methods : ["GET","POST","PUT","DELETE"],
+    credentials : true
+}))
+
 app.use(express.json())
 app.use(express.urlencoded({
     extended : true
 }))
-app.use(cookieParser)
+app.use(cookieParser())
 
-app.use('/api/v1/auth',authRouter);
+app.use('/',authRouter);
 app.use('/api/v1/user',userRouter);
 
-
-app.get('/' , (req,res)=>{
-    res.send(`Hello ,World`)
-})
 
 app.listen(process.env.PORT , (req,res)=>{
     console.log(`App is listening on PORT: ${process.env.PORT}`)

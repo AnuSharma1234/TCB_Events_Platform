@@ -2,6 +2,8 @@ import mongoose from "mongoose"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+import { secretToken } from "../models/util/SecretToken.js"
+
 import User from "../models/user.model.js"
 const authKey  = process.env.AUTH_SECRET_KEY
 
@@ -11,7 +13,7 @@ export const signUp = async (req,res,next) =>{
     ;(await session).startTransaction()
 
     try{
-        const {name , email ,password} = req.body
+        const {username , email ,password} = req.body
 
         const existingUser = await User.findOne({email})
 
@@ -21,25 +23,30 @@ export const signUp = async (req,res,next) =>{
             throw error
         }
 
-        const salt = await bcrypt.getSalt(10)
+        const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password,salt)
 
-        const newUsers = await User.create([{
-            name,
+        const newUser = await User.create([{
+            username,
             email,
             password : hashedPassword
         }])
 
-        const token = jwt.sign({ userId : newUsers[0]._id }, authKey , {expiresIn : '30d'})
+        const token = secretToken(newUser[0]._id)
         ;(await session).commitTransaction()
         ;(await session).endSession()
+
+        res.cookie("token",token , {
+            withCredentials : true,
+            httpOnly : false
+        })
 
         res.status(200).json({
             success : true,
             message : 'User created succesfully',
             data : {
                 token,
-                user : newUsers[0]
+                user : newUser[0]
             }
         })
         

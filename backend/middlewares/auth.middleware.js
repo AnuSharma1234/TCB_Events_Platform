@@ -1,7 +1,7 @@
 import jwt, { decode } from 'jsonwebtoken'
 import User from '../models/user.model.js'
 
-const _SecretToken = process.env.AUTH_SECRET_KEY
+const _SecretToken = process.env.TOKEN_KEY
 const _TokenExpiryTime = '24h'
 
 function authorize(roles = []){

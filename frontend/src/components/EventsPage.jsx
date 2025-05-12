@@ -40,7 +40,7 @@ const eventsData = {
   ],
 };
 
-const EventsPage = () => {
+export const EventsPage = () => {
   const [activeTab, setActiveTab] = useState('past');
 
   const events = eventsData[activeTab];
@@ -48,7 +48,6 @@ const EventsPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a2e] to-black text-white flex flex-col">
       
-      {/* Tabs */}
       <div className="flex justify-center mt-24 space-x-2">
         <button
           onClick={() => setActiveTab('upcoming')}
@@ -68,7 +67,6 @@ const EventsPage = () => {
         </button>
       </div>
 
-      {/* Events Timeline */}
       <main className="px-8 py-10">
         <h1 className="text-3xl font-semibold mb-6">Events</h1>
         <div className="space-y-10">
@@ -100,4 +98,3 @@ const EventsPage = () => {
   );
 };
 
-export default EventsPage;

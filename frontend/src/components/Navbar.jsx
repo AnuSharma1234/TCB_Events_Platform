@@ -14,7 +14,7 @@ const Navbar = () => {
       <div className="flex items-center space-x-6">
         <span className="text-gray-400">12:42 AM GMT+5:30</span>
         <a href="#" className="text-white font-medium hover:underline">Create Event</a>
-        <Link to='/userProfile' className='w-5 h-5 rounded-full bg-gray-500'/>
+        <Link to='/userProfile' className='w-5 h-5 rounded-full bg-gray-500' />
       </div>
     </nav>
   );
