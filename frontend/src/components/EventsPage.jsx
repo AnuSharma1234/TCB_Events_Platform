@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {toast} from 'react-toastify'
+import {useCookies} from 'react-cookie'
 
 const eventsData = {
   upcoming: [
@@ -41,6 +45,28 @@ const eventsData = {
 };
 
 export const EventsPage = () => {
+    const navigate = useNavigate()
+    
+    const[ cookies,  removeCookie] = useCookies([])
+    const[ username , setUsername] = useState('')
+
+    useEffect = (() =>{
+        const verifyCookie = async () => {
+            if(!cookies.token){
+                navigate("/login")
+            }
+
+            const {data}  = await axios.post()
+        }
+        verifyCookie()
+
+    },[cookies , removeCookie , navigate])
+
+
+
+
+
+    
   const [activeTab, setActiveTab] = useState('past');
 
   const events = eventsData[activeTab];
