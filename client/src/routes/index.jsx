@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import { useAuth } from "../provider/authProvider"
-import { ProtectedRoute } from "./ProtectedRoute"
+import { useAuth } from "../provider/authProvider.jsx"
+import { ProtectedRoute } from "./ProtectedRoute.jsx"
+import Signup from "../pages/Signup.jsx"
+import Login from "../pages/Login.jsx"
 
 const Routes = () => {
     const { token } = useAuth()
@@ -37,11 +39,11 @@ const Routes = () => {
         },
         {
             path: '/login',
-            element: <div>Login</div>
+            element: <Login />
         },
         {
             path: '/signup',
-            element: <div>Sign-up</div>
+            element: <Signup />
         }
     ]
 

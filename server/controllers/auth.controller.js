@@ -1,4 +1,5 @@
 import User from '../models/user.model.js'
+import bcrypt from 'bcrypt'
 
 export const signUp = async (req, res) => {
     try {
@@ -30,7 +31,7 @@ export const signUp = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Sign-up Failed'
+            error: 'Sign-up Failed'
         })
         console.log(error)
     }
