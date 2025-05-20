@@ -3,6 +3,7 @@ import { useAuth } from "../provider/authProvider.jsx"
 import { ProtectedRoute } from "./ProtectedRoute.jsx"
 import Signup from "../pages/Signup.jsx"
 import Login from "../pages/Login.jsx"
+import Home from "../pages/Home.jsx"
 
 
 const Routes = () => {
@@ -14,8 +15,8 @@ const Routes = () => {
             element: <ProtectedRoute />,
             children: [
                 {
-                    path: '/events',
-                    element: <div>Home</div>
+                    path: '/',
+                    element: <Home/>
                 },
                 {
                     path: '/profile',
@@ -28,6 +29,10 @@ const Routes = () => {
                 {
                     path: '/logout',
                     element: <div>Logout Page</div>
+                },
+                {
+                    path : '/adminDashboard',
+                    element :  <div>Admin Dashboard</div>
                 }
             ]
         }
@@ -35,8 +40,8 @@ const Routes = () => {
 
     const routesForNotAuthenticatedOnly = [
         {
-            path: '/home',
-            element: <div>View Event</div>
+            path: '/',
+            element: <div>Home : not authenticated</div>
         },
         {
             path: '/login',
