@@ -66,11 +66,7 @@ export const signIn = async (req, res) => {
         })
 
         res.status(200).json({
-            success: true,
-            message: 'User logged in succesfully',
-            data: {
-                token
-            }
+            token
         })
 
     } catch (error) {

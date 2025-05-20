@@ -4,6 +4,7 @@ import { ProtectedRoute } from "./ProtectedRoute.jsx"
 import Signup from "../pages/Signup.jsx"
 import Login from "../pages/Login.jsx"
 
+
 const Routes = () => {
     const { token } = useAuth()
 
@@ -13,8 +14,8 @@ const Routes = () => {
             element: <ProtectedRoute />,
             children: [
                 {
-                    path: '/',
-                    element: <div>Home Page</div>
+                    path: '/events',
+                    element: <div>Home</div>
                 },
                 {
                     path: '/profile',

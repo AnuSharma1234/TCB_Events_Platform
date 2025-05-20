@@ -1,14 +1,26 @@
 import { useAuth } from "../provider/authProvider"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { replace, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
+import { toast, ToastContainer } from "react-toastify"
 
 
 const Login = () => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
     const { setToken } = useAuth()
     const navigate = useNavigate()
 
-    const handleLogin = () => {
-        setToken("this is a test token")
-        navigate("/", { replace: true })
+    const handleSuccess = (message) => {
+        toast.success(message, {
+            position: "top-right",
+        })
+    }
+
+    const handleLogin = async () => {
+        setToken("this is a test token");
+        navigate("/", { repalce: true })
     };
 
     setTimeout(() => {
@@ -17,6 +29,7 @@ const Login = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">
+            <ToastContainer />
             <div className="bg-black/40 backdrop-blur-lg p-8 rounded-2xl w-full max-w-sm shadow-xl text-gray-200">
                 {/* Logo */}
                 <div className="flex justify-center mb-6">
@@ -24,52 +37,47 @@ const Login = () => {
                 </div>
 
                 {/* Header */}
-                <h2 className="text-center text-lg font-semibold">Create your account</h2>
+                <h2 className="text-center text-lg font-semibold">Login to your TCB account</h2>
                 <p className="text-center text-sm text-gray-400 mb-6">
-                    Sign up to get started with Luma.
+                    we do cool tech events  : )
                 </p>
 
-                {/* Name Input */}
-                <div className="mb-4">
-                    <label className="block text-sm mb-1">Full Name</label>
-                    <input
-                        type="text"
-                        placeholder="John Doe"
-                        className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
-                    />
-                </div>
+                <form onSubmit={handleLogin}>
 
-                {/* Email Input */}
-                <div className="mb-4">
-                    <label className="block text-sm mb-1">Email</label>
-                    <input
-                        type="email"
-                        placeholder="you@email.com"
-                        className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
-                    />
-                </div>
+                    {/* Email Input */}
+                    <div className="mb-4">
+                        <label className="block text-sm mb-1">Email</label>
+                        <input
+                            type="email"
+                            placeholder="you@email.com"
+                            onChange={(e) => { setEmail(e.target.email) }}
+                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                        />
+                    </div>
 
-                {/* Password Input */}
-                <div className="mb-4">
-                    <label className="block text-sm mb-1">Password</label>
-                    <input
-                        type="password"
-                        placeholder="••••••••"
-                        className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
-                    />
-                </div>
+                    {/* Password Input */}
+                    <div className="mb-4">
+                        <label className="block text-sm mb-1">Password</label>
+                        <input
+                            type="password"
+                            placeholder="your password"
+                            onChange={(e) => { setPassword(e.target.password) }}
+                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                        />
+                    </div>
 
-                {/* Sign Up Button */}
-                <button className="w-full py-2 mt-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition">
-                    Create Account
-                </button>
-
+                    {/* Sign Up Button */}
+                    <button className="cursor-pointer w-full py-2 mt-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition"
+                        type="submit">
+                        Login
+                    </button>
+                </form>
                 {/* Divider */}
                 <div className="my-4 border-t border-gray-700"></div>
 
                 {/* Google Sign-up */}
                 <button className="w-full py-2 bg-gray-800 text-gray-300 font-medium rounded-md flex items-center justify-center hover:bg-gray-700 transition">
-                    <span className="mr-2">G</span> Sign up with Google
+                    New here ? <Link className="ml-2 text-blue-500" to='/signup'>Sign-Up</Link>
                 </button>
             </div>
         </div>

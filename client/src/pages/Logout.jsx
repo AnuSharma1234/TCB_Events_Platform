@@ -8,7 +8,7 @@ const Logout = () => {
 
     const handleLogout = () => {
         setToken();
-        navigate('/', { replace: true })
+        navigate('/home', { replace: true })
     }
 
     setTimeout(() => {

@@ -90,7 +90,7 @@ const Signup = () => {
                         className="w-full py-2 mt-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition"
                         onClick={handleSubmit}
                     >
-                        Sign-Up
+                        Create account
                     </button>
 
                     {/* Divider */}
