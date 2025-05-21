@@ -3,10 +3,6 @@ import verifyToken from '../middlewares/auth.middleware.js'
 
 const protectedRouter = Router()
 
-protectedRouter.get('/', verifyToken, (req, res) => {
-    res.status(200).json({
-        message: 'Access Granted'
-    })
-})
+protectedRouter.get('/createEvent', verifyToken, )
 
 export default protectedRouter

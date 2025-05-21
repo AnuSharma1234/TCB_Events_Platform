@@ -31,7 +31,7 @@ const Routes = () => {
                     element: <div>Logout Page</div>
                 },
                 {
-                    path : '/adminDashboard',
+                    path : '/admin',
                     element :  <div>Admin Dashboard</div>
                 }
             ]
