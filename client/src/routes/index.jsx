@@ -4,6 +4,9 @@ import { ProtectedRoute } from "./ProtectedRoute.jsx"
 import Signup from "../pages/Signup.jsx"
 import Login from "../pages/Login.jsx"
 import Home from "../pages/Home.jsx"
+import AdminDashboard from '../adminPages/AdminDashboard.jsx'
+import CreateEvent from '../adminPages/CreateEvent.jsx'
+import {AdminRoute} from '../routes/AdminRoute.jsx'
 
 
 const Routes = () => {
@@ -32,7 +35,29 @@ const Routes = () => {
                 },
                 {
                     path : '/admin',
-                    element :  <div>Admin Dashboard</div>
+                    element : <AdminRoute/>,
+                    children : [
+                        {
+                            path : '/admin',
+                            element : <AdminDashboard/> 
+                        },
+                        {
+                            path : '/admin/createEvent',
+                            element : <CreateEvent/>
+                        },
+                        {
+                            path : '/admin/manageEvent',
+                            element : <div>Manage Event</div>
+                        },
+                        {
+                            path : '/admin/editEvent',
+                            element : <div>Edit Event</div>
+                        },
+                        {
+                            path : '/admin/deleteEvent',
+                            element : <div>Confirm Delete Event</div> 
+                        }
+                    ]
                 }
             ]
         }

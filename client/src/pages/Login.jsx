@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify"
 import React from "react"
 import axios from "axios"
+import getUserRole from '../provider/userRoleProvider.js'
 
 
 const Login = () => {
@@ -21,12 +22,8 @@ const Login = () => {
         e.preventDefault();
         const res = await axios.post('http://localhost:5000/auth/signin',form)
         setToken(res.data.token)
-        if(res.data.user.role){
-            navigate('/adminDashboard')
-        }else{
-            navigate('/')
-        }
-    }
+        navigate('/admin')
+   }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">

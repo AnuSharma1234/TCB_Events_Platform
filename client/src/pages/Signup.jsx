@@ -12,25 +12,40 @@ const Signup = () => {
         password : ''
     })
 
+    const handleFailedLogin = (message) =>{
+        toast.error(message, {
+            position: 'top-right',
+        })
+    }
+
     const navigate = useNavigate()
 
     const submit = async e  =>{
         e.preventDefault();
+        try{
+            const res = await axios.post('http://localhost:5000/auth/signup',data)
 
-        const res = await axios.post('http://localhost:5000/auth/signup',data)
-        setToken(res.data.token)
-        navigate('/')
+            if(res.data.sucess){
+                setToken(res.data.token)
+                navigate('/')
+            }else{
+                handleFailedLogin(res.data.message)
+                navigate('/login')
+            }
+        }catch(error){
+            console.log(error)
+        }
     }
 
     return (
         <>
             <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">
-                <ToastContainer/>
                 <div className="bg-black/40 backdrop-blur-lg p-8 rounded-2xl w-full max-w-sm shadow-xl text-gray-200">
                     <div className="flex justify-center mb-6">
                         <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-2xl">🔌</div>
                     </div>
 
+                    <ToastContainer/>
                     <h2 className="text-center text-lg font-semibold">Welcome to TCB Events</h2>
                     <p className="text-center text-sm text-gray-400 mb-6">
                         Please sign up below

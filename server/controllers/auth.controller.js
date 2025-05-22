@@ -7,7 +7,7 @@ export const signUp = async (req, res) => {
     try {
         const { name,  email, password } = req.body
 
-        if (!email || !password) {
+        if (!email || !password || !name) {
             const error = new Error('Both credentials are required for Sign-Up')
             throw error
         }
@@ -15,24 +15,28 @@ export const signUp = async (req, res) => {
         const existingUser = await User.findOne({ email })
 
         if (existingUser) {
-            const error = new Error('User already exists')
+            const error = new Error('User already exists with this email ,try logging in')
+            res.status(200).json({
+                success : false,
+                message : 'User already exists with this email , try logging in'
+            })
             throw error
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const user = User.create({ name ,email, password: hashedPassword })
+        const user = User.create({ name ,email, password: hashedPassword , isAdmin : false})
 
         const token = jwt.sign(
             user.toJSON(),
             process.env.TOKEN_KEY,
-            {expiresIn : '30d'}
-            )
+            {expiresIn : '30d'})
 
         res.status(200).json({
+        success : true,
         token,
         user : {
-                id : user._id , name : user.name , email : user.email , role : user.role 
+                id : user._id , name : user.name , email : user.email , role : user.isAdmin 
         }
         })
 
@@ -80,7 +84,7 @@ export const signIn = async (req, res) => {
             }
         })
 
-     } catch (error) {
+    }catch(error) {
         res.status(400).json({
             sucesss: false,
             message: 'Login Failed'
