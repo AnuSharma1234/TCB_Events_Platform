@@ -9,12 +9,12 @@ export const createEvent = async (req,res) => {
         res.status(200).json({
             success : 'true',
             message : 'Event succesfully created',
-            data : savedEvent
+            event : savedEvent
         })
     }catch(error){
         res.status(200).json({
             success : false,
-            message : "Event cannot be created , Try Again"
+            message : "Failed to create a event , try again"
         })
     }
 }
@@ -41,8 +41,3 @@ export const deleteEvent = async (req,res) =>{
 }
 
 //4 . to get event details 
-
-
-
-
-

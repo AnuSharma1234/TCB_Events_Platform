@@ -23,7 +23,7 @@ const Login = () => {
         const res = await axios.post('http://localhost:5000/auth/signin',form)
         setToken(res.data.token)
         navigate('/admin')
-   }
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">
