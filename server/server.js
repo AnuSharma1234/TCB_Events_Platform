@@ -15,7 +15,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/auth', authRouter) // /signin and /signup
-app.use('/admin',eventRouter)
+app.use('/event',eventRouter)
 
 
 app.listen(process.env.PORT, (req, res) => {

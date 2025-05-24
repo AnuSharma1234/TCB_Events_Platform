@@ -1,45 +1,45 @@
 import jwt from 'jsonwebtoken'
 
 export function verifyToken(req, res, next) {
-    const token = req.headers('Authorization')
-
-    if (!token) {
-        return res.status(400).json({
-            message: 'Access denied'
-        })
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.TOKEN_KEY)
-        req.id = decoded.id;
-        next()
-    } catch (error) {
-        res.status(400).json({
-            message: 'Invalid Token access denied'
-        })
-    }
-    next()
-}
-
-export function  verifyAdmin(req,res,next) {
-    const token = req.headers('Authorization')
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
 
     if(!token){
-        return res.status(400).json({
-            message : 'Token not found , access denied'
+        res.status(400).json({
+            message : 'No token provided'
         })
     }
 
     try{
-        const decoded = jwt.verify(token , process.env.TOKEN_KEY)
-        if(decoded.role == 'admin'){
-            next()
-        }else{
-            throw new Error('Access Denied')
-        }
+        const decoded = jwt.verify(token, process.env.TOKEN_KEY)
+        req.userId = decoded.userId
+        next()
     }catch(error){
         res.status(400).json({
-            message : 'Access Denied'
+            message : 'Token de bsdk'
+        })
+    }
+}
+
+
+export function verifyAdmin(req,res,next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    try{
+        const user = jwt.verify(token,  process.env.TOKEN_KEY)
+
+        if(user.role){
+            return res.status(400).json({
+                message : "Logged in user is not admin"
+            })
+        }
+
+        req.user = user
+        next()
+    }catch(error){
+        res.status(400).json({
+            message : 'Access denied to the protected route'
         })
     }
 }

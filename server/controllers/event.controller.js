@@ -1,5 +1,6 @@
 import Event from '../models/event.model.js'
-// 1 . To create a event 
+
+
 export const createEvent = async (req,res) => {
     const newEvent = Event(req.body)
 
@@ -21,7 +22,6 @@ export const createEvent = async (req,res) => {
 
 // 2 . To update a event 
 
-// 3 . TO delete a event 
 export const deleteEvent = async (req,res) =>{
     const id = req.params.id
 
@@ -40,4 +40,13 @@ export const deleteEvent = async (req,res) =>{
     }
 }
 
-//4 . to get event details 
+export const getEventDetails = async (req,res) =>{
+    try{
+        const events = await Event.find(req.params.id)
+        res.status(200).json(events)
+    }catch(error){
+        res.status(500).json({
+            message : error.message
+        })
+    }
+}

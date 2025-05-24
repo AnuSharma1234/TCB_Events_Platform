@@ -32,10 +32,8 @@ const CreateEvent = () => {
 
         try{
             const res = await axios.post('http://localhost:5000/admin',form)
-            if(res.data.success){
-                handleSuccess(res.data.message)
-                navigate('/admin')
-            }
+            handleSuccess(res.data.message)
+            navigate('/admin')
         }catch(error){
             handleError(error)
         }
@@ -44,7 +42,6 @@ const CreateEvent = () => {
 
   return (
     <div className="min-h-screen bg-[#1f1f1f] text-white p-8">
-            <ToastContainer/>
       <div className="flex gap-6">
         {/* Left: Event Banner and Theme */}
         <div className="flex flex-col items-center">
@@ -67,6 +64,8 @@ const CreateEvent = () => {
             <div className="space-y-2">
                 <input 
                     type="text"
+                    value={form.title}
+                    name="title"
                     placeholder="Enter event title"
                     onChange={(e) => setForm({...form , title : e.target.value})}
                     className="text-3xl font-serif"
@@ -82,6 +81,8 @@ const CreateEvent = () => {
               <div className="flex gap-2 items-center bg-[#2e2e2e] p-2 rounded-lg">
                 <input 
                     type="date" 
+                    name="date"
+                    value={form.date}
                     placeholder="Date of event"
                     onChange={(e) => setForm({...form , date : e.target.value})}
                     required
@@ -93,6 +94,8 @@ const CreateEvent = () => {
               <div className="flex gap-2 items-center bg-[#2e2e2e] p-2 rounded-lg">
                 <input
                     type="text"
+                    name="day"
+                    value={form.day}
                     placeholder="Day of event"
                     onChange={(e) => setForm({...form , day : e.target.value})}
                     required
@@ -104,7 +107,9 @@ const CreateEvent = () => {
           {/* Location */}
           <div className="bg-[#2e2e2e] rounded-lg p-4">
             <input 
-                type="text" 
+                type="text"
+                name="venue"
+                value={form.venue}
                 placeholder="Enter venue details"
                 onChange={(e) => setForm({...form , venue : e.target.value })}
                 required
@@ -116,24 +121,18 @@ const CreateEvent = () => {
             <div className="bg-[#2e2e2e] p-4 rounded-lg flex justify-between items-center">
                 <input 
                     type="number"
+                    name="teamSize"
+                    value={form.teamSize}
                     placeholder = "Team Size (optional)"
                     onChange = {(e) => setForm({...form , teamSize : e.target.value})}
                 />
             </div>
 
             <div className="bg-[#2e2e2e] p-4 rounded-lg flex justify-between items-center">
-              <span className="text-sm">Team Approval</span>
-              <input
-                type="checkbox"
-                checked={isApprovalRequired}
-                onChange={() => setIsApprovalRequired(!isApprovalRequired)}
-                className="w-5 h-5"
-              />
-            </div>
-
-            <div className="bg-[#2e2e2e] p-4 rounded-lg flex justify-between items-center">
                 <input
                     type="number"
+                    name="maxTeams"
+                    value={form.maxTeam}
                     placeholder="Max teams(optional)"
                     onChange = {(e) => setForm({...form , maxTeams: e.target.value})}
                 />
