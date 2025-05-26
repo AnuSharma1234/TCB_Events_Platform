@@ -4,6 +4,7 @@ import authRouter from './routes/auth.router.js'
 import cors from 'cors'
 import { configDotenv } from 'dotenv'
 import eventRouter from './routes/event.router.js'
+import registerRouter from './routes/register.router.js'
 
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(express.json())
 
 app.use('/auth', authRouter) // /signin and /signup
 app.use('/event',eventRouter)
+app.use('/register',registerRouter)
 
 
 app.listen(process.env.PORT, (req, res) => {

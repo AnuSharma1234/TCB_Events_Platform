@@ -11,7 +11,7 @@ const eventSchema = mongoose.Schema({
     },
     day : {
         type : String,
-        required : [true , "You need to declare event day"],
+        required : [true , "day of event is required"],
     },
     venue : {
         type : String,
