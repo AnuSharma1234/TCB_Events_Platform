@@ -5,6 +5,9 @@ const eventSchema = mongoose.Schema({
         type : String,
         required : [true , 'Event title is required']
     },
+    eventBanner : {
+        type : String
+    },
     date : {
         type : String,
         required : [true , "Date of Event is required"],
@@ -20,11 +23,12 @@ const eventSchema = mongoose.Schema({
     teamSize : {
         type : Number,
     },
-    maxTeams : {
-        type : Number
-    },
     otherDesc : {
         type : String
+    },
+    isLive : {
+        type : Boolean,
+        default : true
     }
 })
 

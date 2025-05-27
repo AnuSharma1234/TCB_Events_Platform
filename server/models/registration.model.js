@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const teamSchema = mongoose.Schema({
+const registrationSchema = mongoose.Schema({
     teamName : {
         type : String,
         required : [true, 'team name is required']
@@ -24,6 +24,6 @@ const teamSchema = mongoose.Schema({
     }
 })
 
-const Team = mongoose.model('Team',teamSchema)
+const Registration = mongoose.model('Team',registrationSchema)
 
-export default Team
+export default Registration

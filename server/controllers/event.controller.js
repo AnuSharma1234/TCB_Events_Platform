@@ -1,6 +1,5 @@
 import Event from '../models/event.model.js'
 
-
 export const createEvent = async (req,res) => {
     const newEvent = Event(req.body)
 
@@ -20,7 +19,27 @@ export const createEvent = async (req,res) => {
     }
 }
 
-// 2 . To update a event 
+export const updateEvent = async (req,res) =>{
+    const id = req.params.id
+
+    try{
+        const updatedEvent = await Event.findByIdAndUpdate(id , {$set : req.body}, {new : true})
+
+        res.status(200).json({
+            success : true,
+            message : 'Event updated succesfully',
+            data : updatedEvent
+        })
+
+
+    }catch(error){
+        res.status(400).json({
+            success : false,
+            message : 'Failed to update the event'
+        })
+    }
+
+}
 
 export const deleteEvent = async (req,res) =>{
     const id = req.params.id

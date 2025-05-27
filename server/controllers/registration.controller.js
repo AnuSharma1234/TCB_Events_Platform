@@ -1,10 +1,10 @@
-import Team from '../models/team.model.js'
+import Team from '../models/registration.model.js'
 
 export const registerEvent = async (req,res) =>{
 
     const newRegistration = Team(req.body)
 
-    const existingTeam = await newRegistration.findOne({newRegistration.leaderEmail})
+    const existingTeam = await Team.findOne(newRegistration.leaderEmail)
 
     if(existingTeam){
         res.status(400).json({

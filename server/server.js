@@ -20,6 +20,7 @@ app.use('/event',eventRouter)
 app.use('/register',registerRouter)
 
 
+
 app.listen(process.env.PORT, (req, res) => {
     console.log(`Server started on PORT : ${process.env.PORT}`)
     connectDb()
