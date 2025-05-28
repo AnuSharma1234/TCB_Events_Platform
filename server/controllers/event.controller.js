@@ -1,7 +1,25 @@
 import Event from '../models/event.model.js'
 
 export const createEvent = async (req,res) => {
-    const newEvent = Event(req.body)
+    const eventBanner = req.file.filename
+    const title = req.body.title
+    const date = req.body.date
+    const day = req.body.day
+    const venue = req.body.venue
+    const teamSize = req.body.teamSize
+    const otherDesc = req.body.otherDesc
+    const isLive = req.body.isLive
+
+    const newEvent = {
+        title,
+        eventBanner,
+        date,
+        day,
+        venue,
+        teamSize,
+        otherDesc,
+        isLive
+    }
 
     try{
         const savedEvent = await newEvent.save()
