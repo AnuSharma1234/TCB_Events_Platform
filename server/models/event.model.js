@@ -3,14 +3,17 @@ import mongoose from 'mongoose'
 const eventSchema = mongoose.Schema({
     title : {
         type : String,
-        required : [true , 'Event title is required']
+        required : [true , 'event title is required']
     },
     eventBanner : {
         type : String
     },
+    cloudinary_id : {
+        type : String
+    },
     date : {
         type : String,
-        required : [true , "Date of Event is required"],
+        required : [true , "date of Event is required"],
     },
     day : {
         type : String,

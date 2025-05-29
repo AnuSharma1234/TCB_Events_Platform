@@ -1,27 +1,23 @@
 import Event from '../models/event.model.js'
+import cloudinary from '../utils/cloudinary.js'
+
 
 export const createEvent = async (req,res) => {
-    const eventBanner = req.file.filename
-    const title = req.body.title
-    const date = req.body.date
-    const day = req.body.day
-    const venue = req.body.venue
-    const teamSize = req.body.teamSize
-    const otherDesc = req.body.otherDesc
-    const isLive = req.body.isLive
-
-    const newEvent = {
-        title,
-        eventBanner,
-        date,
-        day,
-        venue,
-        teamSize,
-        otherDesc,
-        isLive
-    }
-
     try{
+        const result = await cloudinary.uploader.upload(req.file.path)
+
+        let newEvent = new Event({
+            title : req.body.title,
+            eventBanner : result.secure_url,
+            cloudinary_id : result.public_id,
+            date : req.body.date,
+            day : req.body.day,
+            venue : req.body.venue,
+            teamSize : req.body.teamSize,
+            otherDesc : req.body.otherDesc,
+            isLive : req.body.isLive
+        })
+
         const savedEvent = await newEvent.save()
 
         res.status(200).json({
@@ -41,14 +37,41 @@ export const updateEvent = async (req,res) =>{
     const id = req.params.id
 
     try{
-        const updatedEvent = await Event.findByIdAndUpdate(id , {$set : req.body}, {new : true})
+        const event  = await Event.findById(id)
+
+        if(!event){
+            res.status(400).json({
+                success : false,
+                message : "Event does not exists !!"
+            })
+        }
+
+        await cloudinary.uploader.destroy(event.cloudinary_id)
+
+        let result;
+        if(req.file){
+            result = await cloudinary.uploader.upload(req.file.path)
+        }
+
+        const data = {
+            title : req.body.title || event.title,
+            eventBanner : result?.secure_url || event.eventBanner,
+            cloudinary_id : result?.public_id || event.cloudinary_id,
+            date : req.body.date || event.date,
+            day : req.body.day || event.day,
+            venue : req.body.venue || event.venue,
+            teamSize : req.body.teamSize || event.teamSize,
+            otherDesc : req.body.otherDesc || event.otherDesc,
+            isLive : req.body.isLive || event.isLive
+        }
+
+        event = await Event.findByIdAndUpdate(id , data, {new : true})
 
         res.status(200).json({
             success : true,
             message : 'Event updated succesfully',
-            data : updatedEvent
+            data : event
         })
-
 
     }catch(error){
         res.status(400).json({
@@ -56,13 +79,23 @@ export const updateEvent = async (req,res) =>{
             message : 'Failed to update the event'
         })
     }
-
 }
 
 export const deleteEvent = async (req,res) =>{
     const id = req.params.id
 
+    const event = await Event.findById(id)
+
+    if(!event){
+        res.status(400).json({
+            success : false,
+            message : 'Event does not exists'
+        })
+    }
+
     try{
+        await cloudinary.uploader.destroy(event.cloudinary_id)
+
         await Event.findByIdAndDelete(id)
         res.status(200).json({
             success : true,
