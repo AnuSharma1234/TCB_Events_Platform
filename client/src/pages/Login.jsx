@@ -2,10 +2,8 @@ import { useAuth } from "../provider/authProvider"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { toast, ToastContainer } from "react-toastify"
 import React from "react"
 import axios from "axios"
-import getUserRole from '../provider/userRoleProvider.js'
 
 
 const Login = () => {
@@ -27,7 +25,6 @@ const Login = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">
-            <ToastContainer />
             <div className="bg-black/40 backdrop-blur-lg p-8 rounded-2xl w-full max-w-sm shadow-xl text-gray-200">
                 <div className="flex justify-center mb-6">
                     <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-2xl">🌟</div>

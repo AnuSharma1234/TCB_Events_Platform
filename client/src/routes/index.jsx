@@ -5,6 +5,7 @@ import Signup from "../pages/Signup.jsx"
 import Login from "../pages/Login.jsx"
 import Home from "../pages/Home.jsx"
 import AdminDashboard from '../adminPages/AdminDashboard.jsx'
+import LandingPage from "../pages/LandingPage.jsx"
 import CreateEvent from '../adminPages/CreateEvent.jsx'
 import {AdminRoute} from '../routes/AdminRoute.jsx'
 
@@ -66,7 +67,7 @@ const Routes = () => {
     const routesForNotAuthenticatedOnly = [
         {
             path: '/',
-            element: <div>Home : not authenticated</div>
+            element: <LandingPage/> 
         },
         {
             path: '/login',

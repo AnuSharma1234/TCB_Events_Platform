@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom'
+import Navbar from '../components/Navbar';
 
 const eventsData = {
   upcoming: [
@@ -49,18 +50,7 @@ const EventsPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1a1a2e] to-black text-white flex flex-col">
       {/* Navbar */}
-      <header className="flex justify-between items-center px-6 py-4 border-b border-gray-700">
-        <div className="flex space-x-6 items-center">
-          <span className="text-white font-semibold">✨</span>
-          <a href="#" className="text-sm hover:underline">thecodebreakers</a>
-        </div>
-        <div className="flex items-center space-x-4">
-            <Link to='/admin/createEvent'>
-            <button className="text-sm font-medium hover:underline cursor-pointer">Create Event</button>
-            </Link>
-        </div>
-      </header>
-
+      <Navbar/>
       {/* Tabs */}
       <div className="flex justify-center mt-6 space-x-2">
         <button
