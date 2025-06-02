@@ -20,14 +20,8 @@ const Login = () => {
             position : 'top-right'
         })
     }
-    const handleSuccess = (message) =>{
-        toast.success(message , {
-            position : "top-right"
-        })
-    }
 
     const navigate = useNavigate()
-
 
     const submit = async e =>{
         e.preventDefault();
@@ -35,24 +29,22 @@ const Login = () => {
         try{
             const res = await axios.post('http://localhost:5000/auth/signin',form)
 
-            if(res.success){
+            if(res.data.success){
                 setToken(res.data.token)
-                handleSuccess(res.message)
-                setTimeout(()=>{
-                navigate('/admin')
-                },3000)
+                if(res.data.user.role){
+                    navigate('/admin')
+                }else{
+                    navigate('/')
+                }
             }else{
                 const errorData = res.json()
                 handleError(errorData.error.message)
             }
-
         }catch(error){
             console.log(error.message)
             handleError('Incorrect Email or Password!')
         }
-
-    
-  }
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">
