@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import React from "react"
 import axios from "axios"
+import { toast , ToastContainer } from "react-toastify"
 
 
 const Login = () => {
@@ -14,14 +15,44 @@ const Login = () => {
         password : ''
     })
 
+    const handleError = (error) =>{
+        toast.error(error ,{
+            position : 'top-right'
+        })
+    }
+    const handleSuccess = (message) =>{
+        toast.success(message , {
+            position : "top-right"
+        })
+    }
+
     const navigate = useNavigate()
+
 
     const submit = async e =>{
         e.preventDefault();
-        const res = await axios.post('http://localhost:5000/auth/signin',form)
-        setToken(res.data.token)
-        navigate('/admin')
-    }
+
+        try{
+            const res = await axios.post('http://localhost:5000/auth/signin',form)
+
+            if(res.success){
+                setToken(res.data.token)
+                handleSuccess(res.message)
+                setTimeout(()=>{
+                navigate('/admin')
+                },3000)
+            }else{
+                const errorData = res.json()
+                handleError(errorData.error.message)
+            }
+
+        }catch(error){
+            console.log(error.message)
+            handleError('Incorrect Email or Password!')
+        }
+
+    
+  }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">
@@ -30,9 +61,9 @@ const Login = () => {
                     <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-2xl">🌟</div>
                 </div>
 
-                <h2 className="text-center text-lg font-semibold">Login to your TCB account</h2>
+                <h2 className="text-center text-lg font-semibold">Login to your account</h2>
                 <p className="text-center text-sm text-gray-400 mb-6">
-                    we do cool tech events  : )
+                    we do cool tech events  ;) 
                 </p>
 
                 <form onSubmit={submit}>
@@ -68,6 +99,7 @@ const Login = () => {
                     New here ? <Link className="ml-2 text-blue-500" to='/signup'>Sign-Up</Link>
                 </button>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

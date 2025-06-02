@@ -120,3 +120,28 @@ export const getEventDetails = async (req,res) =>{
         })
     }
 }
+
+export const closeEvent = async (req,res) => {
+    const id  = req.params.id
+    try{
+        const event = findById(id)
+
+        if(!event){
+            res.status(400).json({
+                message : 'Event does not exists'
+            })
+        }
+
+        event = findByIdAndUpdate(id , event.isLive = false , {new : true})
+
+        res.status(200).json({
+            success : true,
+            message : 'Event closed succesfully'
+        })
+
+    }catch(error){
+        res.status(500).json({
+            message : error.message
+        })
+    }
+}

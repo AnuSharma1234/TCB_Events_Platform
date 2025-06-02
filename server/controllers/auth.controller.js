@@ -56,21 +56,24 @@ export const signIn = async (req, res) => {
 
         if (!email || !password) {
             const error = new Error('Both credentials are required for Sign-In')
+            error.statusCode = 400
             throw error
         }
 
         const user = await User.findOne({ email })
 
         if (!user) {
-            return res.status(400).json({ message: 'User does not exist' })
+            const error = new Error('User does not exists !')
+            error.statusCode = 400
+            throw error
         }
 
         const isPassValid = await bcrypt.compare(password, user.password)
 
         if (!isPassValid) {
-            return res.status(400).json({
-                message: 'Password is invalid'
-            })
+            const error = new Error('Invalid Password')
+            error.statusCode = 400
+            throw error
         }
 
         const token = jwt.sign(user.toJSON(),process.env.TOKEN_KEY, {
@@ -79,16 +82,19 @@ export const signIn = async (req, res) => {
 
         res.status(200).json({
             token,
+            message : "Logged in Succesfully",
             user : {
                 id : user._id , name : user.name , email : user.email , role : user.role
             }
         })
 
     }catch(error) {
-        res.status(400).json({
-            sucesss: false,
-            message: 'Login Failed'
-        })
+        res.status(error.statusCode).json({
+            success : false,
+            error : {
+                message : error.message || "Internal server error"
+            }
+       })
         console.log(error)
     }
 }
