@@ -13,6 +13,10 @@ const registrationSchema = mongoose.Schema({
         type : String,
         required : [true , 'leader email is required']
     },
+    year : {
+        type : Number,
+        required : [true , 'your team year is required']
+    },
     mem1Name : {
         type : String
     },
@@ -21,7 +25,7 @@ const registrationSchema = mongoose.Schema({
     },
     mem3Name : {
         type : String
-    }
+    },
 })
 
 const Registration = mongoose.model('Team',registrationSchema)

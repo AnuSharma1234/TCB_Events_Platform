@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateEvent = () => {
+const EditEvent = () => {
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <div className="bg-zinc-900 mt-7 p-6 rounded-md max-w-5xl mx-auto">
@@ -99,4 +99,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default EditEvent;

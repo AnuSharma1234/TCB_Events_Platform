@@ -29,33 +29,24 @@ const Login = () => {
         try{
             const res = await axios.post('http://localhost:5000/auth/signin',form)
 
-            if(res.data.success){
-                setToken(res.data.token)
-                if(res.data.user.role){
-                    navigate('/admin')
-                }else{
-                    navigate('/')
-                }
+            setToken(res.data.token)
+            if(res.data.isAdmin){
+                navigate('/admin')
             }else{
-                const errorData = res.json()
-                handleError(errorData.error.message)
+                navigate('/')
             }
-        }catch(error){
+       }catch(error){
             console.log(error.message)
             handleError('Incorrect Email or Password!')
         }
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">
-            <div className="bg-black/40 backdrop-blur-lg p-8 rounded-2xl w-full max-w-sm shadow-xl text-gray-200">
-                <div className="flex justify-center mb-6">
-                    <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-2xl">🌟</div>
-                </div>
-
+        <div className="min-h-screen bg-black flex items-center justify-center px-4">
+            <div className="bg-zinc-900 backdrop-blur-lg p-8 rounded-xl w-full max-w-sm shadow-lg text-gray-200">
                 <h2 className="text-center text-lg font-semibold">Login to your account</h2>
                 <p className="text-center text-sm text-gray-400 mb-6">
-                    we do cool tech events  ;) 
+                    we do cool tech events  ; ) 
                 </p>
 
                 <form onSubmit={submit}>
@@ -66,7 +57,7 @@ const Login = () => {
                             type="email"
                             placeholder="you@email.com"
                             onChange={(e) => setForm({...form , email : e.target.value})}
-                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                            className="w-full px-4 py-2 bg-zinc-900 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500"
                         />
                     </div>
 
@@ -74,9 +65,8 @@ const Login = () => {
                         <label className="block text-sm mb-1">Password</label>
                         <input
                             type="password"
-                            placeholder="your password"
                             onChange={(e) => setForm({...form , password : e.target.value})}
-                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                            className="w-full px-4 py-2 bg-zinc-900 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500"
                         />
                     </div>
 
@@ -86,10 +76,10 @@ const Login = () => {
                     </button>
                 </form>
                 <div className="my-4 border-t border-gray-700"></div>
-
-                <button className="w-full py-2 bg-gray-800 text-gray-300 font-medium rounded-md flex items-center justify-center hover:bg-gray-700 transition">
-                    New here ? <Link className="ml-2 text-blue-500" to='/signup'>Sign-Up</Link>
-                </button>
+                <p>New Here ?</p>
+                <Link  to='/signup' className="w-full mt-2 py-2 bg-black text-white font-medium rounded-md flex items-center justify-center hover:bg-gray-950 transition border border-zinc-700">
+                    Sign-Up
+                </Link>
             </div>
             <ToastContainer/>
         </div>

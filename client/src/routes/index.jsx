@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import { useAuth } from "../provider/authProvider.jsx"
 import { ProtectedRoute } from "./ProtectedRoute.jsx"
+import ManageEvent from "../adminPages/ManageEvent.jsx"
 import Signup from "../pages/Signup.jsx"
 import Login from "../pages/Login.jsx"
 import Home from "../pages/Home.jsx"
@@ -8,6 +9,8 @@ import AdminDashboard from '../adminPages/AdminDashboard.jsx'
 import LandingPage from "../pages/LandingPage.jsx"
 import CreateEvent from '../adminPages/CreateEvent.jsx'
 import {AdminRoute} from '../routes/AdminRoute.jsx'
+import EventRegister from "../pages/EventRegister.jsx"
+import EditEvent from "../adminPages/EditEvent.jsx"
 
 
 const Routes = () => {
@@ -23,12 +26,8 @@ const Routes = () => {
                     element: <Home/>
                 },
                 {
-                    path: '/profile',
-                    element: <div>Profile Page</div>
-                },
-                {
-                    path: '/registerEvent',
-                    element: <div>Event registration Page</div>
+                    path: '/register',
+                    element: <EventRegister/>
                 },
                 {
                     path: '/logout',
@@ -43,22 +42,22 @@ const Routes = () => {
                             element : <AdminDashboard/> 
                         },
                         {
-                            path : '/admin/createEvent',
+                            path : '/admin/create',
                             element : <CreateEvent/>
                         },
                         {
-                            path : '/admin/manageEvent',
-                            element : <div>Manage Event</div>
+                            path : '/admin/manage',
+                            element : <ManageEvent/> 
                         },
                         {
-                            path : '/admin/editEvent',
-                            element : <div>Edit Event</div>
+                            path : '/admin/edit',
+                            element : <EditEvent/> 
                         },
                         {
-                            path : '/admin/deleteEvent',
-                            element : <div>Confirm Delete Event</div> 
-                        }
-                    ]
+                            path : '/admin/close',
+                            element : <CloseEvent/> 
+                        },
+                   ]
                 }
             ]
         }

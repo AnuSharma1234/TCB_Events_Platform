@@ -12,7 +12,7 @@ const Signup = () => {
         password : ''
     })
 
-    const handleFailedLogin = (message) =>{
+    const handleError = (message) =>{
         toast.error(message, {
             position: 'top-right',
         })
@@ -25,64 +25,52 @@ const Signup = () => {
         try{
             const res = await axios.post('http://localhost:5000/auth/signup',data)
 
-            if(res.data.sucess){
+            if(res.data.success){
                 setToken(res.data.token)
                 navigate('/')
             }else{
-                handleFailedLogin(res.data.message)
+                handleError(res.data.message)
                 navigate('/login')
             }
         }catch(error){
             console.log(error)
+            handleError('Failed to Sign-Up')
         }
     }
 
     return (
-        <>
-            <div className="min-h-screen bg-gradient-to-br from-black via-[#0d0d0d] to-[#111] flex items-center justify-center px-4">
-                <div className="bg-black/40 backdrop-blur-lg p-8 rounded-2xl w-full max-w-sm shadow-xl text-gray-200">
-                    <div className="flex justify-center mb-6">
-                        <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-2xl">🔌</div>
-                    </div>
-
-                    <ToastContainer/>
-                    <h2 className="text-center text-lg font-semibold">Welcome to TCB Events</h2>
+            <div className="min-h-screen bg-black flex items-center justify-center px-4">
+                <div className="bg-zinc-900 backdrop-blur-lg p-8 rounded-xl w-full max-w-sm shadow-lg text-gray-200">
+                    <h2 className="text-center text-lg font-semibold">Welcome to EventBreakers</h2>
                     <p className="text-center text-sm text-gray-400 mb-6">
                         Please sign up below
                     </p>
 
                     <form onSubmit={submit}>
                     <div className="mb-4">
-                        <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
-                            <span></span>
-                        </div>
-                        <input
+                        <label className="block text-sm mb-1">Username</label>
+                       <input
                             type="text"
                             placeholder="username"
                             onChange={(e) => setData({...data , name: e.target.value})}
-                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                            className="w-full px-4 py-2 bg-zinc-900 text-white rounded-md border  border-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500"
                         />
                     </div>
                     <div className="mb-4">
-                        <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
-                            <span></span>
-                        </div>
-                        <input
+                        <label className="block text-sm mb-1">Email</label>
+                       <input
                             type="email"
                             placeholder="you@email.com"
                             onChange={(e) => setData({...data , email : e.target.value})}
-                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                            className="w-full px-4 py-2 bg-zinc-900 border border-zinc-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
                         />
                     </div>
                     <div className="mb-4">
-                        <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
-                            <span></span>
-                        </div>
-                        <input
+                        <label className="block text-sm mb-1">Password</label>
+                       <input
                             type="password"
-                            placeholder="your password"
                             onChange={(e) => setData({...data , password : e.target.value})}
-                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600"
+                            className="w-full px-4 py-2 bg-zinc-900 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2  focus:ring-zinc-500"
                         />
                     </div>
 
@@ -96,14 +84,13 @@ const Signup = () => {
                     </form>
 
                     <div className="my-4 border-t border-gray-700"></div>
-
-                    <button className="w-full py-2 bg-gray-800 text-gray-300 font-medium rounded-md flex items-center justify-center hover:bg-gray-700 transition">
-                        Already signed up? <Link to='/login' className="text-blue-500 ml-2"> Login</Link>
-                    </button>
+                    <p>Already have an account ?</p>
+                    <Link to='/login' className="mt-2 w-full py-2 border border-zinc-700 bg-black text-white font-medium rounded-md flex items-center justify-center hover:bg-gray-950 transition">
+                        Login
+                    </Link>
                 </div>
                 <ToastContainer />
             </div>
-        </>
     )
 
 }

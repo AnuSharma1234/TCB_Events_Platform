@@ -84,8 +84,9 @@ export const signIn = async (req, res) => {
             success : true,
             token,
             message : "Logged in Succesfully",
+            isAdmin : user.isAdmin,
             user : {
-                id : user._id , name : user.name , email : user.email , role : user.role
+                id : user._id , name : user.name , email : user.email , isAdmin : user.isAdmin , isRegisterdForLatesEvent : user.isRegisterdForLatesEvent
             }
         })
 

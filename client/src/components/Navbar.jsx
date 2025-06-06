@@ -1,20 +1,19 @@
 import React from "react"
-import CreateEventButton from "./CreateEventButton.jsx"
-import EventButton from "./EventButton.jsx"
+import { Link } from "react-router-dom"
 
 const Navbar = () => {
 
     return(
-        <header className="flex bg-gray-900 justify-between items-center px-6 py-4 border-b border-gray-700">
-        <div className="flex space-x-6 text-white items-center">
-          <span className="text-white font-semibold">✨</span>
-          <a href="/" className="text-sm hover:underline">thecodebreakers</a>
-          <EventButton/>
-      </div>
-        <div className="flex items-center text-white space-x-4">
-            <CreateEventButton/>
-            <button className="w-6 h-6 rounded-full bg-gray-600"></button>
+        <header className="flex bg-black justify-between items-center px-6 py-4 border-b border-gray-700">
+            <div className="text-2xl font-semibold">
+          <span className="text-white">Event</span>
+          <span className="text-cyan-500">Breakers</span>
         </div>
+        <div className="space-x-4">
+            <Link to='/'><button className="bg-cyan-500 font-bold px-4 py-1 rounded-md text-sm text-white cursor-pointer hover:bg-cyan-600">Events</button></Link>
+          <Link to='/logout'><button className="text-cyan-500 bg-amber-50 font-bold px-4 py-1 rounded-md text-sm cursor-pointer hover:bg-cyan-600">Logout</button></Link>
+       </div>
+ 
         </header>
     )
 }
