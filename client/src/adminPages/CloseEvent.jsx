@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DeleteConfirmationModal = ({ onCancel, onConfirm, onClose }) => {
+const CloseEvent = ({ onCancel, onConfirm, onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="bg-[#1e293b] text-white rounded-xl shadow-xl w-full max-w-md p-6 relative">
@@ -25,7 +25,7 @@ const DeleteConfirmationModal = ({ onCancel, onConfirm, onClose }) => {
 
         {/* Message */}
         <p className="text-center mb-2">
-          <span className="text-blue-400 font-medium">@bonniegr</span>, are you sure you want to delete this product from platform?
+          <span className="text-blue-400 font-medium">@Admin</span>, are you sure you want to close this event?
         </p>
         <p className="text-center text-sm text-gray-400 mb-6">This action cannot be undone.</p>
 
@@ -41,7 +41,7 @@ const DeleteConfirmationModal = ({ onCancel, onConfirm, onClose }) => {
             onClick={onConfirm}
             className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm text-white"
           >
-            Yes, delete
+            Yes
           </button>
         </div>
       </div>
@@ -49,4 +49,4 @@ const DeleteConfirmationModal = ({ onCancel, onConfirm, onClose }) => {
   );
 };
 
-export default DeleteConfirmationModal;
+export default CloseEvent;

@@ -1,7 +1,16 @@
 import User from '../models/user.model.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import welcomeTemplate from '../mailTemplates/newJoining.js'
+import mailSender from '../utils/mailSender.js'
 
+async function sendJoiningEmail(email , name){
+    try{
+        const mailResponse = await mailSender(email , "Verification email from TCB",welcomeTemplate(name))
+    }catch(error){
+        console.log(error.message)
+    }
+}
 
 export const signUp = async (req, res) => {
     try {
@@ -28,16 +37,17 @@ export const signUp = async (req, res) => {
         const user = User.create({ name ,email, password: hashedPassword , isAdmin : false})
 
         const token = jwt.sign(
-            user.toJSON(),
+            {user},
             process.env.TOKEN_KEY,
-            {expiresIn : '30d'})
+            {expiresIn : '30d'}
+        )
+
+        sendJoiningEmail(email,name)
 
         res.status(200).json({
         success : true,
         token,
-        user : {
-                id : user._id , name : user.name , email : user.email , role : user.isAdmin 
-        }
+        user
         })
 
     }catch (error) {

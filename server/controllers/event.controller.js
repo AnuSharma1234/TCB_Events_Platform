@@ -1,24 +1,43 @@
 import Event from '../models/event.model.js'
-import cloudinary from '../utils/cloudinary.js'
+import cloudinary from 'cloudinary'
+import cloudinaryConnect from '../utils/cloudinary.js'
+import uploadImageToCloudinary from '../utils/imageUploader.js'
 
 
 export const createEvent = async (req,res) => {
     try{
-        const result = await cloudinary.uploader.upload(req.file.path)
+        const {
+            title,
+            date,
+            day,
+            venue,
+            teamSize,
+            otherDesc
+        } = req.body
 
-        let newEvent = new Event({
-            title : req.body.title,
-            eventBanner : result.secure_url,
-            cloudinary_id : result.public_id,
-            date : req.body.date,
-            day : req.body.day,
-            venue : req.body.venue,
-            teamSize : req.body.teamSize,
-            otherDesc : req.body.otherDesc,
-            isLive : req.body.isLive
+        const eventBanner = req?.files?.eventBanner;
+
+        let eventBannerUrl = ""
+        if(eventBanner){
+            try{
+                cloudinaryConnect()
+                const result = await uploadImageToCloudinary(eventBanner,process.env.CLOUD_NAME , 1000 , 1000)
+
+                eventBannerUrl = result.secure_url
+            }catch(error){
+                console.log("Event Banner could not be uploaded")
+            }
+        }
+
+        const savedEvent = await Event.create({
+            title,
+            eventBanner : eventBannerUrl,
+            date,
+            day,
+            venue,
+            teamSize,
+            otherDesc,
         })
-
-        const savedEvent = await newEvent.save()
 
         res.status(200).json({
             success : 'true',
@@ -62,7 +81,9 @@ export const updateEvent = async (req,res) =>{
             venue : req.body.venue || event.venue,
             teamSize : req.body.teamSize || event.teamSize,
             otherDesc : req.body.otherDesc || event.otherDesc,
-            isLive : req.body.isLive || event.isLive
+            isLive : req.body.isLive || event.isLive,
+            isFull : req.body.isFull || event.isFull,
+            registrations : req.body.registrations || event.registrations
         }
 
         event = await Event.findByIdAndUpdate(id , data, {new : true})

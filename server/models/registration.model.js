@@ -17,14 +17,14 @@ const registrationSchema = mongoose.Schema({
         type : Number,
         required : [true , 'your team year is required']
     },
-    mem1Name : {
-        type : String
-    },
-    mem2Name : {
-        type : String
-    },
-    mem3Name : {
-        type : String
+    teamMembers : [{
+        name : String,
+        email : String,
+    }],
+    event : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Event',
+        required : true
     },
 })
 

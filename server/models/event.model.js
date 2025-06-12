@@ -8,9 +8,6 @@ const eventSchema = mongoose.Schema({
     eventBanner : {
         type : String
     },
-    cloudinary_id : {
-        type : String
-    },
     date : {
         type : String,
         required : [true , "date of Event is required"],
@@ -32,7 +29,15 @@ const eventSchema = mongoose.Schema({
     isLive : {
         type : Boolean,
         default : true
-    }
+    },
+    isFull : {
+        type : Boolean,
+        default : false
+    },
+    registrations : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Registration'
+    }]
 })
 
 const Event = mongoose.model("Event",eventSchema)

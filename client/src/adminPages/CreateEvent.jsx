@@ -1,6 +1,48 @@
 import React from "react";
+import { ToastContainer , toast } from "react-toastify";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CreateEvent = () => {
+    const [form , setForm] = useState({
+        title : "",
+        date : "",
+        day : "",
+        venue : "",
+        teamSize : "",
+        otherDesc : "",
+    })
+
+    const handleError = (error) =>{
+        toast.error(error , {
+            position : "top-right"
+        })
+    }
+
+    const handleSuccess = (message) =>{
+        toast.success(message , {
+            position : 'top-right'
+        })
+        navigate('/admin')
+    }
+    
+    const navigate = useNavigate()
+
+    const submit = async e =>{
+        e.preventDefault()
+        try{
+            const res = await axios.post('http://localhost:5000/event',form)
+            
+            handleSuccess("Event created succesfully")
+            
+        }catch(error){
+            console.log(error.message)
+            handleError('Unable to create a event')
+        }
+    }
+
+
   return (
     <div className="min-h-screen bg-black text-white p-6">
       <div className="bg-zinc-900 mt-7 p-6 rounded-md max-w-5xl mx-auto">
@@ -62,11 +104,11 @@ const CreateEvent = () => {
               <label className="block text-sm mb-2">Description</label>
               <textarea
                 className="bg-gray-800 px-4 py-2 rounded-md w-full h-32"
-                placeholder="Write product description here"
+                placeholder="Write event description here"
               ></textarea>
             </div>
             <div>
-              <label className="block text-sm mb-2">Product Images</label>
+              <label className="block text-sm mb-2">Event Banner</label>
               <div className="bg-gray-800 px-4 py-6 rounded-md border-2 border-dashed border-gray-600 flex items-center justify-center text-center">
                 <div>
                   <svg
@@ -78,11 +120,8 @@ const CreateEvent = () => {
                   >
                     <path d="M7 16V4m0 0L4 7m3-3l3 3M17 8v12m0 0l-3-3m3 3l3-3" />
                   </svg>
-                  <p>Click to upload or drag and drop</p>
+                  <input type="file" className="mb-3 pl-27" />
                   <p className="text-sm text-gray-400">Max. File Size: 30MB</p>
-                  <button className="mt-2 bg-cyan-600 px-2 py-1 text-sm rounded">
-                    Extra small
-                  </button>
                 </div>
               </div>
             </div>
@@ -95,6 +134,7 @@ const CreateEvent = () => {
           </div>
         </form>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

@@ -5,16 +5,14 @@ import upload from '../utils/multer.js'
 
 const eventRouter = Router()
 
-
-eventRouter.post('/', verifyToken ,upload.single('image') , verifyAdmin , createEvent )
+eventRouter.post('/', verifyToken , verifyAdmin , upload.single('eventBanner') , createEvent )
 
 eventRouter.delete('/:id' , verifyToken , verifyAdmin , deleteEvent)
 
-eventRouter.get('/' ,verifyToken, getEventDetails)
+eventRouter.get('/:id' ,verifyToken, getEventDetails)
 
 eventRouter.put('/:id' ,verifyToken , verifyAdmin , upload.single('image'),  updateEvent)
 
 eventRouter.put('/:id',verifyToken , verifyAdmin , closeEvent)
-
 
 export default eventRouter

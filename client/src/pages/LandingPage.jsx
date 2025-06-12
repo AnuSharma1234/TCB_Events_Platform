@@ -7,7 +7,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-black text-white">
         <main className="relative">
         {/* Grid Background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:70px_70px] h-screen"></div>
         <Aurora
   colorStops={["#00D8FF", "#7CFF67", "#00D8FF"]}
   blend={0.5}
