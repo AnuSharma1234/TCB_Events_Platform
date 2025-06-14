@@ -15,10 +15,6 @@ const Home = () => {
        }
     },[])
 
-    const handleCreateEventButton = () =>{
-        navigate('/admin/create')
-    }
-
   return (
     <div className="min-h-screen bg-black">
       {/* Navbar */}
@@ -29,7 +25,7 @@ const Home = () => {
         </div>
         <div className="space-x-4">
             <Link to='/'><button className="bg-cyan-500 font-bold px-4 py-1 rounded-md text-sm text-white cursor-pointer hover:bg-cyan-600">Events</button></Link>
-            <Link><button onClick={handleCreateEventButton} className="text-white cursor-pointer font-bold bg-cyan-500 px-4 py-1 rounded-md text-sm hover:bg-cyan-600">Create Event</button></Link>
+            <button className="text-white cursor-pointer font-bold bg-cyan-500 px-4 py-1 rounded-md text-sm hover:bg-cyan-600"><Link to='/admin/create'>Create Event</Link></button>
           <Link to='/logout'><button className="text-cyan-500 bg-amber-50 font-bold px-4 py-1 rounded-md text-sm cursor-pointer hover:bg-cyan-600">Logout</button></Link>
        </div>
  

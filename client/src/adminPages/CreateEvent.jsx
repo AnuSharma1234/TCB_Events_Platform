@@ -5,8 +5,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CreateEvent = () => {
+
+    const navigate = useNavigate()
+
     const [form , setForm] = useState({
         title : "",
+        eventBanner : null,
         date : "",
         day : "",
         venue : "",
@@ -15,33 +19,38 @@ const CreateEvent = () => {
     })
 
     const handleError = (error) =>{
-        toast.error(error , {
+        toast.error(error,{
             position : "top-right"
         })
     }
 
     const handleSuccess = (message) =>{
         toast.success(message , {
-            position : 'top-right'
+            position : "top-right"
         })
-        navigate('/admin')
     }
-    
-    const navigate = useNavigate()
 
     const submit = async e =>{
         e.preventDefault()
+
         try{
             const res = await axios.post('http://localhost:5000/event',form)
-            
-            handleSuccess("Event created succesfully")
-            
-        }catch(error){
+
+            if(res.data.success){
+                handleSuccess(res.data.message)
+
+                setTimeout(()=>{
+                    navigate('/admin')
+                },3000)
+            }
+
+        }catch(error){ 
             console.log(error.message)
-            handleError('Unable to create a event')
+            handleError('Failed to create an event')
         }
     }
 
+    
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
@@ -49,26 +58,40 @@ const CreateEvent = () => {
         <h2 className="text-lg font-semibold border-b border-gray-600 pb-2 mb-6">
           Create a new Event
         </h2>
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={submit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm mb-2">Event Name</label>
               <input
                 className="bg-gray-800 px-4 py-2 rounded-md w-full"
+                type="text"
+                id="title"
+                name="title"
                 placeholder="Enter event name"
+                onChange={(e)=>{
+                    setForm({...form , title : e.target.value})
+                }}
               />
             </div>
             <div>
               <label className="block text-sm mb-2">Venue</label>
               <input
                 className="bg-gray-800 px-4 py-2 rounded-md w-full"
+                type="text"
                 placeholder="Venue for the event"
+                name="venue"
+                onChange={(e)=>setForm({
+                    ...form , venue : e.target.value
+                })}
               />
             </div>
             <div>
               <label className="block text-sm mb-2">Day</label>
              <select id="day" 
               className="bg-gray-800 px-4 py-2 rounded-md w-full"
+              onChange={(e) => setForm({
+                ...form , day : e.target.value
+              })}
               >
                 <option value="Monday">Monday</option>
                 <option value="Tuesday">Tuesday</option>
@@ -84,8 +107,11 @@ const CreateEvent = () => {
               <input
                 type="date"
                 className="bg-gray-800 px-4 py-2 rounded-md w-full"
-                placeholder="Price"
-                defaultValue="$2999"
+                placeholder="Date"
+                name="date"
+                onChange={(e)=>setForm({
+                    ...form , date : e.target.value
+                })}
               />
             </div>
            <div className="grid grid-cols-3 gap-4">
@@ -93,7 +119,12 @@ const CreateEvent = () => {
                 <label className="block text-sm mb-2">Max Size of Team</label>
                 <input
                   className="bg-gray-800 px-4 py-2 rounded-md w-full"
-                  placeholder="105"
+                  placeholder="1-4"
+                  name="teamSize"
+                  type="text"
+                  onChange={(e)=> setForm({
+                    ...form , teamSize : e.target.value
+                  })}
                 />
               </div>
            </div>
@@ -105,6 +136,10 @@ const CreateEvent = () => {
               <textarea
                 className="bg-gray-800 px-4 py-2 rounded-md w-full h-32"
                 placeholder="Write event description here"
+                name="otherDesc"
+                onChange={(e) => setForm({
+                    ...form , otherDesc : e.target.value
+                })}
               ></textarea>
             </div>
             <div>
@@ -120,7 +155,11 @@ const CreateEvent = () => {
                   >
                     <path d="M7 16V4m0 0L4 7m3-3l3 3M17 8v12m0 0l-3-3m3 3l3-3" />
                   </svg>
-                  <input type="file" className="mb-3 pl-27" />
+                  <input type="file" className="mb-3 pl-27" 
+                  name="eventBanner"
+                  onChange={(e) => setForm({
+                    ...form , eventBanner : e.target.files[0]
+                  })} />
                   <p className="text-sm text-gray-400">Max. File Size: 30MB</p>
                 </div>
               </div>
@@ -128,7 +167,7 @@ const CreateEvent = () => {
           </div>
 
           <div>
-            <button className="bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-md text-white">
+            <button className="bg-cyan-600 hover:bg-cyan-700 cursor-pointer px-4 py-2 rounded-md text-white" type="submit">
               Create Event
             </button>
           </div>

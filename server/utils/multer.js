@@ -1,28 +1,15 @@
-import multer from 'multer';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "./cloudinary.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const upload = multer({
-  storage: multer.memoryStorage({
-    destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, 'uploads'));
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname));
-    },
-  }),
-  fileFilter: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
-      cb(new Error("File type is not supported"), false);
-      return;
+const storage = new CloudinaryStorage({
+    cloudinary : cloudinary,
+    params : {
+        folder : "eventBreakersFolder",
+        allowed_formats : ["jpg","jpeg","png"],
     }
-    cb(null, true);
-  },
-});
+})
 
-export default upload;
+const upload = multer({ storage })
+
+export const uploadImage = upload.single("eventBanner")

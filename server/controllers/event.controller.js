@@ -1,8 +1,5 @@
 import Event from '../models/event.model.js'
 import cloudinary from 'cloudinary'
-import cloudinaryConnect from '../utils/cloudinary.js'
-import uploadImageToCloudinary from '../utils/imageUploader.js'
-
 
 export const createEvent = async (req,res) => {
     try{
@@ -15,21 +12,15 @@ export const createEvent = async (req,res) => {
             otherDesc
         } = req.body
 
-        const eventBanner = req?.files?.eventBanner;
+        let eventBannerUrl
 
-        let eventBannerUrl = ""
-        if(eventBanner){
-            try{
-                cloudinaryConnect()
-                const result = await uploadImageToCloudinary(eventBanner,process.env.CLOUD_NAME , 1000 , 1000)
-
-                eventBannerUrl = result.secure_url
-            }catch(error){
-                console.log("Event Banner could not be uploaded")
-            }
+        if(req.file){
+            eventBannerUrl = req.file.path
+        }else{
+            eventBannerUrl = "https://res.cloudinary.com/dkmjsy5aa/image/upload/v1749718881/Screenshot_from_2025-06-11_15-06-39_pt6fe9.png"
         }
 
-        const savedEvent = await Event.create({
+        const event = await Event.create({
             title,
             eventBanner : eventBannerUrl,
             date,
@@ -40,12 +31,12 @@ export const createEvent = async (req,res) => {
         })
 
         res.status(200).json({
-            success : 'true',
+            success : true,
             message : 'Event succesfully created',
-            event : savedEvent
         })
+
     }catch(error){
-        res.status(200).json({
+        res.status(400).json({
             success : false,
             message : "Failed to create a event , try again"
         })
@@ -65,17 +56,15 @@ export const updateEvent = async (req,res) =>{
             })
         }
 
-        await cloudinary.uploader.destroy(event.cloudinary_id)
-
-        let result;
+        let eventBannerUrl = event.eventBanner
         if(req.file){
-            result = await cloudinary.uploader.upload(req.file.path)
+            eventBannerUrl = req.file.path
         }
+
 
         const data = {
             title : req.body.title || event.title,
-            eventBanner : result?.secure_url || event.eventBanner,
-            cloudinary_id : result?.public_id || event.cloudinary_id,
+            eventBanner : eventBannerUrl || event.eventBanner,
             date : req.body.date || event.date,
             day : req.body.day || event.day,
             venue : req.body.venue || event.venue,
@@ -133,10 +122,22 @@ export const deleteEvent = async (req,res) =>{
 
 export const getEventDetails = async (req,res) =>{
     try{
-        const events = await Event.find(req.params.id)
-        res.status(200).json(events)
+        const event = await Event.find(req.params.id)
+
+        if(!event){
+            res.status(400).json({
+                success : false,
+                message : "Event does not exists"
+            })
+        }
+
+        res.status(200).json({
+            success : true,
+            event : event
+        })
     }catch(error){
         res.status(500).json({
+            success : false,
             message : error.message
         })
     }
@@ -145,7 +146,7 @@ export const getEventDetails = async (req,res) =>{
 export const closeEvent = async (req,res) => {
     const id  = req.params.id
     try{
-        const event = findById(id)
+        const event = Event.findById(id)
 
         if(!event){
             res.status(400).json({
@@ -162,7 +163,38 @@ export const closeEvent = async (req,res) => {
 
     }catch(error){
         res.status(500).json({
+            success : false,
             message : error.message
         })
     }
+}
+
+export const stopEventRegistratons = async (req,res) => {
+    const id = req.params.id
+
+    try{
+        const event = Event.findById(id)
+
+        if(!event){
+            res.status(400).json({
+                success : false,
+                message : "Event does not exists"
+            })
+        }
+
+        event = findByIdAndUpdate(id, event.isFull = true, {new : true})
+
+        res.status(200).json({
+            success : true,
+            message : "Event will no longer take registrations"
+        })
+
+    }catch(error){
+        res.status(500).json({
+            success : false,
+            message : error.message
+        })
+    }
+
+
 }
