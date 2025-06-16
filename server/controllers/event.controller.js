@@ -3,6 +3,13 @@ import cloudinary from 'cloudinary'
 
 export const createEvent = async (req,res) => {
     try{
+        let eventBannerUrl = ""
+        if(req.file){
+            eventBannerUrl = req.file.path
+        }else{
+            eventBannerUrl = "https://res.cloudinary.com/dkmjsy5aa/image/upload/v1749718881/Screenshot_from_2025-06-11_15-06-39_pt6fe9.png"
+        }
+
         const {
             title,
             date,
@@ -11,14 +18,6 @@ export const createEvent = async (req,res) => {
             teamSize,
             otherDesc
         } = req.body
-
-        let eventBannerUrl
-
-        if(req.file){
-            eventBannerUrl = req.file.path
-        }else{
-            eventBannerUrl = "https://res.cloudinary.com/dkmjsy5aa/image/upload/v1749718881/Screenshot_from_2025-06-11_15-06-39_pt6fe9.png"
-        }
 
         const event = await Event.create({
             title,
@@ -36,9 +35,10 @@ export const createEvent = async (req,res) => {
         })
 
     }catch(error){
+        console.log("Error in create Event : ",error.message)
         res.status(400).json({
             success : false,
-            message : "Failed to create a event , try again"
+            message : error.message ||"Failed to create a event , try again"
         })
     }
 }

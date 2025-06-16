@@ -15,7 +15,7 @@ async function sendJoiningEmail(email , name){
 export const signUp = async (req, res) => {
     try {
         const { name,  email, password } = req.body
-
+ 
         if (!email || !password || !name) {
             const error = new Error('Both credentials are required for Sign-Up')
             throw error
@@ -45,10 +45,10 @@ export const signUp = async (req, res) => {
         sendJoiningEmail(email,name)
 
         res.status(200).json({
-        success : true,
-        token,
-        user
-        })
+            success : true,
+            token,
+            user
+        } )
 
     }catch (error) {
         res.status(400).json({
