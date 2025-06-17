@@ -47,7 +47,7 @@ const Routes = () => {
                             element : <CreateEvent/>
                         },
                         {
-                            path : '/admin/manage',
+                            path : '/admin/manage/:event_id',
                             element : <ManageEvent/> 
                         },
                         {

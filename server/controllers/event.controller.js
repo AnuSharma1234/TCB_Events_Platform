@@ -120,25 +120,49 @@ export const deleteEvent = async (req,res) =>{
     }
 }
 
-export const getEventDetails = async (req,res) =>{
+export const getAllEventDetails = async (req,res) =>{
     try{
-        const event = await Event.find(req.params.id)
+        const allEvents = await Event.find()
+
+        res.status(200).json({
+            success : true,
+            message : "All events fetched succesfully",
+            allEvents,
+        })
+
+    }catch(error){
+        console.log(error.message)
+        res.status(400).json({
+            success : false,
+            message : 'Error fetching event details'
+        })
+    }
+}
+
+export const getEventById = async(req,res) =>{
+    const id = req.params.id
+
+    try{
+        const event = await Event.findById(id)
 
         if(!event){
             res.status(400).json({
                 success : false,
-                message : "Event does not exists"
+                message : "Event does not exist"
             })
         }
 
         res.status(200).json({
             success : true,
-            event : event
+            message : "Event details fetched succesfully",
+            event
         })
+
     }catch(error){
-        res.status(500).json({
+        console.log(error.message)
+        res.status(400).json({
             success : false,
-            message : error.message
+            message : error.message ||"Error fetching event details"
         })
     }
 }

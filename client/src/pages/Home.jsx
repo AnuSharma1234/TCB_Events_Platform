@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar";
 import getUserRole from "../provider/userRoleProvider";
 import { useNavigate } from "react-router-dom";
 import SpotlightCard from "../components/SpotlightCard";
-import ManageEventButton from "../components/ManageEventButton";
 
 const Home = () => {
     const navigate = useNavigate()
@@ -37,7 +36,7 @@ const Home = () => {
               <p className="text-16 text-white mt-1">Offline Event • TCB</p>
             </div>
             <div className="p-4">
-                <ManageEventButton/>
+                <Link to={`/register`} className="bg-cyan-500 text-white px-6 py-2 rounded-md hover:bg-cyan-600 cursor-pointer font-bold">Register</Link>
            </div>
         </SpotlightCard>
        </div>
