@@ -11,20 +11,18 @@ const ManageEvent = () => {
     const  {token} = useAuth()
 
     useEffect(() => {
-        // Fetch event details by ID
         const fetchEventDetails = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/event/${event_id}`, {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Include token for authentication
+                        Authorization: `Bearer ${token}`,
                     },
                 });
-                setEvent(res.data.event); // Assuming the API response contains an `event` object
+                setEvent(res.data.event);
             } catch (error) {
                 console.error("Error fetching event details:", error.message);
             }
         };
-
         fetchEventDetails();
     }, [event_id, token]);
 
@@ -54,6 +52,10 @@ const ManageEvent = () => {
                             <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-md font-semibold flex items-center gap-2">
                                 <span className="inline-block w-4 h-4 rounded-full bg-white"></span>
                                 <Link to={`/admin/edit/${event_id}`}>Edit Event</Link>
+                            </button>
+                            <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-md font-semibold flex items-center gap-2">
+                                <span className="inline-block w-4 h-4 rounded-full bg-white"></span>
+                                <Link to={`/admin/edit/${event_id}`}>Stop Registrations</Link>
                             </button>
                         </div>
                     </>

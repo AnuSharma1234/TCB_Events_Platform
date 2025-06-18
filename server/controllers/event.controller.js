@@ -219,6 +219,4 @@ export const stopEventRegistratons = async (req,res) => {
             message : error.message
         })
     }
-
-
 }

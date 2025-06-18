@@ -42,10 +42,20 @@ const Login = () => {
     }
 
     return (
-        <div className="min-h-screen bg-black flex items-center justify-center px-4">
-            <div className="bg-zinc-900 backdrop-blur-lg p-8 rounded-xl w-full max-w-sm shadow-lg text-gray-200">
-                <h2 className="text-center text-lg font-semibold">Login to your account</h2>
-                <p className="text-center text-sm text-gray-400 mb-6">
+        <div>
+        <header className="flex bg-black justify-between items-center px-6 py-4 border-b border-gray-700">
+            <Link className="text-2xl font-semibold" to='/'>
+          <span className="text-white">Event</span>
+          <span className="text-cyan-500">Breakers</span>
+        </Link>
+        <div className="space-x-4">
+         <Link to='/signup'><button className="text-cyan-500 bg-amber-50 font-bold px-6 py-2 rounded-md text-8 cursor-pointer hover:bg-cyan-600">Sign-up</button></Link>
+       </div>
+        </header>
+        <div className="min-h-screen bg-black flex items-center justify-center">
+            <div id="main_div" className="bg-black backdrop-blur-lg p-8 rounded-md border border-gray-600 shadow-[18px_-18px_0px_0px_#0ff0f7] w-full max-w-sm mb-36 text-gray-200 mr-8">
+                <h2 className="text-center text-2xl font-semibold">Login to your <span className="text-cyan-500">account</span></h2>
+                <p className="text-center text-md text-gray-400 mb-6">
                     we do cool tech events  ; ) 
                 </p>
 
@@ -70,17 +80,18 @@ const Login = () => {
                         />
                     </div>
 
-                    <button className="cursor-pointer w-full py-2 mt-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition"
+                    <button className="cursor-pointer w-full py-2 mt-2 bg-white text-cyan-500 font-semibold rounded-md hover:bg-gray-200 transition"
                         type="submit">
                         Login
                     </button>
                 </form>
                 <div className="my-4 border-t border-gray-700"></div>
                 <p>New Here ?</p>
-                <Link  to='/signup' className="w-full mt-2 py-2 bg-black text-white font-medium rounded-md flex items-center justify-center hover:bg-gray-950 transition border border-zinc-700">
+                <Link  to='/signup' className="w-full mt-2 py-2 border border-zinc-700 bg-black text-cyan-500 font-medium rounded-md flex items-center justify-center hover:bg-gray-950">
                     Sign-Up
                 </Link>
             </div>
+        </div>
             <ToastContainer/>
         </div>
     )

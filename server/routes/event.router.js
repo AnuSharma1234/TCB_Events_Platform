@@ -15,10 +15,10 @@ eventRouter.get('/' ,verifyToken, getAllEventDetails)
 
 eventRouter.get('/:id',verifyToken,getEventById)
 
-eventRouter.put('/:id' ,verifyToken , verifyAdmin , uploadImage ,  updateEvent)
+eventRouter.put('/update/:id' ,verifyToken , verifyAdmin , uploadImage ,  updateEvent)
 
-eventRouter.put('/:id',verifyToken , verifyAdmin , closeEvent)
+eventRouter.put('/close/:id',verifyToken , verifyAdmin , closeEvent)
 
-eventRouter.put('/:id',verifyToken , verifyAdmin, stopEventRegistratons)
+eventRouter.put('/stop/:id',verifyToken , verifyAdmin, stopEventRegistratons)
 
 export default eventRouter

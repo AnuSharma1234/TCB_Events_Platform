@@ -39,10 +39,21 @@ const Signup = () => {
     }
 
     return (
+        <div>
+        <header className="flex bg-black justify-between items-center px-6 py-4 border-b border-gray-700">
+            <Link className="text-2xl font-semibold" to='/'>
+          <span className="text-white">Event</span>
+          <span className="text-cyan-500">Breakers</span>
+        </Link>
+        <div className="space-x-4">
+            <Link to='/login'><button className="bg-cyan-500 font-bold px-6 py-2 rounded-md text-8 text-white cursor-pointer hover:bg-cyan-600">Login</button></Link>
+       </div>
+ 
+        </header>
             <div className="min-h-screen bg-black flex items-center justify-center px-4">
-                <div className="bg-zinc-900 backdrop-blur-lg p-8 rounded-xl w-full max-w-sm shadow-lg text-gray-200">
-                    <h2 className="text-center text-lg font-semibold">Welcome to EventBreakers</h2>
-                    <p className="text-center text-sm text-gray-400 mb-6">
+                <div className="bg-black backdrop-blur-lg mb-36 mr-8 p-8 rounded-md shadow-[18px_-18px_0px_0px_#0ff0f7] w-full max-w-sm border border-gray-600 text-gray-200">
+                    <h2 className="text-center text-2xl font-semibold">Welcome to Event<span className="text-cyan-500">Breakers</span></h2>
+                    <p className="text-center text-md text-gray-400 mb-6">
                         Please sign up below
                     </p>
 
@@ -73,10 +84,8 @@ const Signup = () => {
                             className="w-full px-4 py-2 bg-zinc-900 text-white rounded-md border border-zinc-700 focus:outline-none focus:ring-2  focus:ring-zinc-500"
                         />
                     </div>
-
-
                     <button
-                        className="w-full py-2 mt-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition"
+                        className="w-full py-2 mt-2 bg-cyan-500  text-white cursor-pointer font-semibold rounded-md hover:bg-cyan-600 transition"
                         type="submit"
                     >
                         Create account
@@ -85,12 +94,13 @@ const Signup = () => {
 
                     <div className="my-4 border-t border-gray-700"></div>
                     <p>Already have an account ?</p>
-                    <Link to='/login' className="mt-2 w-full py-2 border border-zinc-700 bg-black text-white font-medium rounded-md flex items-center justify-center hover:bg-gray-950 transition">
+                    <Link to='/login' className="mt-2 w-full py-2 border border-zinc-700 bg-black text-cyan-500 font-bold rounded-md flex items-center justify-center hover:bg-gray-950 transition">
                         Login
                     </Link>
                 </div>
                 <ToastContainer />
             </div>
+        </div>
     )
 
 }
