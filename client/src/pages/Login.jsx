@@ -49,7 +49,7 @@ const Login = () => {
           <span className="text-cyan-500">Breakers</span>
         </Link>
         <div className="space-x-4">
-         <Link to='/signup'><button className="text-cyan-500 bg-amber-50 font-bold px-6 py-2 rounded-md text-8 cursor-pointer hover:bg-cyan-600">Sign-up</button></Link>
+         <Link to='/signup'><button className="text-amber-50 bg-cyan-500 font-bold px-6 py-2 rounded-md text-8 cursor-pointer hover:bg-cyan-600">Sign-up</button></Link>
        </div>
         </header>
         <div className="min-h-screen bg-black flex items-center justify-center">
