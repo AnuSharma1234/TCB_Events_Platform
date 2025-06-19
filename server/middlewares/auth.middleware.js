@@ -39,6 +39,7 @@ export function verifyAdmin(req,res,next) {
             })
         }
    }catch(error){
+        console.log(error.message)
         res.status(400).json({
             message : 'Access denied to the protected route'
         })

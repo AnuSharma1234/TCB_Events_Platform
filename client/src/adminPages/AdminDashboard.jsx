@@ -1,118 +1,195 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { 
+  BarChart3, 
+  Calendar, 
+  Users, 
+  TrendingUp, 
+  DollarSign,
+} from 'lucide-react';
 
-const Dashboard = () => {
-  return (
-    <div className="flex min-h-screen bg-black text-white">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-900 p-4 flex flex-col justify-between">
-        <div>
-          <h2 className="text-xl font-bold text-cyan-500 mb-6">One</h2>
-          <ul className="space-y-4 text-sm">
-            <li className="font-semibold text-cyan-500">Dashboard</li>
-            <li>Tables</li>
-            <li>Forms</li>
-            <li>UI</li>
-            <li>Responsive</li>
-            <li>Styles</li>
-            <li>Profile</li>
-            <li>Login</li>
-            <li>Error</li>
-            <li>Dropdown</li>
-            <li>GitHub</li>
-            <li>Vue version</li>
-          </ul>
-        </div>
-        <button className="bg-cyan-500 hover:bg-cyan-600 mt-6 p-2 rounded">Logout</button>
-      </aside>
+const AdminDashboard = () => {
+  const [activeNav, setActiveNav] = useState('Dashboard');
 
-      {/* Main Content */}
-      <main className="flex-1 p-6">
-        {/* Topbar */}
-        <div className="flex justify-between items-center mb-6">
-          <input
-            type="text"
-            placeholder="Search"
-            className="bg-gray-800 text-white p-2 rounded placeholder:text-gray-400"
-          />
-          <div className="flex gap-4 items-center text-sm">
-            <span>Sample menu ▼</span>
-            <span>👤 John Doe ▼</span>
-            <span>🔔 ⚙️</span>
+  const dashboardData = {
+    stats: [
+      {
+        title: 'Live Events',
+        value: '2',
+        change: '+1 from last month',
+        icon: Calendar,
+        iconBg: 'bg-blue-500/10',
+        iconColor: 'text-blue-500'
+      },
+      {
+        title: 'Total Registrations',
+        value: '434',
+        change: '+12% from last month',
+        icon: Users,
+        iconBg: 'bg-cyan-500/10',
+        iconColor: 'text-cyan-500'
+      },
+      {
+        title: 'Attendance Rate',
+        value: '84%',
+        change: '+2% from last month',
+        icon: TrendingUp,
+        iconBg: 'bg-emerald-500/10',
+        iconColor: 'text-emerald-500'
+      },
+      {
+        title: 'Revenue',
+        value: '$12,450',
+        change: '+8% from last month',
+        icon: DollarSign,
+        iconBg: 'bg-green-500/10',
+        iconColor: 'text-green-500'
+      }
+    ],
+    recentRegistrations: [
+      {
+        name: 'John Doe',
+        event: 'Tech Conference 2024',
+        status: 'confirmed',
+        statusColor: 'bg-cyan-500'
+      },
+      {
+        name: 'Jane Smith',
+        event: 'Tech Conference 2024',
+        status: 'pending',
+        statusColor: 'bg-yellow-500'
+      },
+      {
+        name: 'Mike Johnson',
+        event: 'Product Launch',
+        status: 'confirmed',
+        statusColor: 'bg-cyan-500'
+      }
+    ],
+    upcomingEvents: [
+      {
+        name: 'John Doe',
+        event: 'Tech Conference 2024',
+        status: 'confirmed',
+        statusColor: 'bg-cyan-500'
+      },
+      {
+        name: 'Jane Smith',
+        event: 'Tech Conference 2024',
+        status: 'pending',
+        statusColor: 'bg-yellow-500'
+      },
+   ]
+  };
+
+  const StatCard = ({ stat }) => {
+    const IconComponent = stat.icon;
+    return (
+      <div className="bg-[#0B1121] rounded-xl p-6 border border-zinc-500">
+        <div className="flex items-center gap-4 mb-4">
+          <div className={`p-2 rounded-lg ${stat.iconBg}`}>
+            <IconComponent className={`w-5 h-5 ${stat.iconColor}`} />
           </div>
+          <h3 className="text-gray-300 text-md">{stat.title}</h3>
         </div>
+        <div>
+          <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
+          <div className="text-sm text-gray-400">{stat.change}</div>
+        </div>
+      </div>
+    );
+  };
 
-        {/* Trends overview */}
-        <section className="mb-6">
-          <h3 className="text-lg font-semibold mb-2">📊 Trends overview</h3>
-          <div className="bg-gray-900 rounded-lg p-4">
-            {/* Chart Placeholder */}
-            <div className="h-64 bg-cyan-500 bg-opacity-20 rounded-lg flex items-center justify-center text-cyan-500">
-              Chart Placeholder
+  return (
+    <div className="min-h-screen bg-black flex">
+      <div className="w-64 border-r border-gray-800">
+        <div className="p-4">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center">
+              <BarChart3 className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <div className="text-white font-bold">Event<span className='text-cyan-500'>Breakers</span></div>
+              <div className="text-sm text-gray-400">Dashboard</div>
             </div>
           </div>
-        </section>
 
-        {/* Clients Table */}
-        <section>
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-semibold">👥 Clients</h3>
-            <button className="bg-cyan-500 text-sm px-3 py-1 rounded">Responsive table</button>
+          <div className="mb-4">
+            <div className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">
+              Navigation
+            </div>
+            {['Dashboard', 'Live Events', 'Registrations', 'Past Events', 'Admin Settings'].map((item) => (
+              <button
+                key={item}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-white text-sm mb-1 ${
+                  activeNav === item 
+                    ? 'bg-[#0B1121] text-white' 
+                    : 'text-gray-400 hover:text-white hover:bg-[#0B1121]'
+                }`}
+                onClick={() => setActiveNav(item)}
+              >
+                {item}
+              </button>
+            ))}
           </div>
-          <div className="overflow-auto">
-            <table className="min-w-full bg-gray-900 rounded-lg text-sm">
-              <thead>
-                <tr className="text-left border-b border-gray-700">
-                  <th className="p-3">Name</th>
-                  <th className="p-3">Company</th>
-                  <th className="p-3">City</th>
-                  <th className="p-3">Progress</th>
-                  <th className="p-3">Created</th>
-                  <th className="p-3">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    name: 'Howell Hand',
-                    company: 'Kiehn-Green',
-                    city: 'Emelyside',
-                    progress: '70%',
-                    created: 'Mar 3, 2025',
-                  },
-                  {
-                    name: 'Hope Howe',
-                    company: 'Nolan Inc',
-                    city: 'Paristown',
-                    progress: '45%',
-                    created: 'Dec 1, 2025',
-                  },
-                ].map((client, index) => (
-                  <tr key={index} className="border-t border-gray-800">
-                    <td className="p-3">{client.name}</td>
-                    <td className="p-3">{client.company}</td>
-                    <td className="p-3">{client.city}</td>
-                    <td className="p-3">
-                      <div className="w-full bg-gray-700 h-2 rounded">
-                        <div
-                          className="bg-cyan-500 h-2 rounded"
-                          style={{ width: client.progress }}
-                        ></div>
-                      </div>
-                    </td>
-                    <td className="p-3">{client.created}</td>
-                    <td className="p-3 space-x-2">
-                      <button className="bg-cyan-500 px-2 py-1 rounded">👁️</button>
-                      <button className="bg-red-600 px-2 py-1 rounded">🗑️</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        </div>
+
+        <div className="absolute bottom-0 left-0 w-64 p-4 border-t border-gray-800">
+          <div className="flex items-center gap-2 text-white font-bold border border-zinc-900 bg-cyan-500 rounded-md justify-center py-2 px-1 cursor-pointer hover:bg-cyan-700">
+            Logout
           </div>
-        </section>
-      </main>
+        </div>
+      </div>
+
+      <div className="flex-1 p-8">
+        <header className="mb-8">
+          <h1 className="text-2xl font-bold text-white mb-1">Live Event Overview</h1>
+          <p className="text-gray-400">Monitor your events and registrations</p>
+        </header>
+
+        <div className="grid grid-cols-4 gap-6 mb-8 ">
+          {dashboardData.stats.map((stat, index) => (
+            <StatCard key={index} stat={stat} />
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 gap-6">
+          <div className="bg-[#0B1121] rounded-xl p-6 border border-zinc-500">
+            <h2 className="text-xl font-bold text-white mb-6">Registrations : First Year</h2>
+            <div className="space-y-4">
+              {dashboardData.recentRegistrations.map((reg, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div>
+                    <div className="text-white font-medium">{reg.name}</div>
+                    <div className="text-sm text-gray-400">{reg.event}</div>
+                  </div>
+                  <span className={`px-3 py-1 rounded-full text-xs ${reg.statusColor}`}>
+                    {reg.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-[#0B1121] rounded-xl p-6 border border-zinc-500">
+            <h2 className="text-xl font-bold text-white mb-6">Registrations : Second Year</h2>
+            <div className="space-y-4">
+              {dashboardData.upcomingEvents.map((event, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div>
+                    <div className="text-white font-medium">{event.name}</div>
+                    <div className="text-sm text-gray-400">{event.event}</div>
+                  </div>
+                  <div className="text-right">
+                    <span className={`px-3 py-1 rounded-full text-xs ${event.statusColor}`}>{event.status}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

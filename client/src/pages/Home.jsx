@@ -19,10 +19,10 @@ export default function Home() {
       {/* Centered navbar */}
       <header className="flex bg-black justify-between items-center px-6 py-4 border-b border-gray-700">
         <div className="container mx-auto max-w-7xl flex justify-between items-center">
-          <div className="text-2xl font-semibold">
+          <Link to='/' className="cursor-pointer text-2xl font-semibold">
             <span className="text-white">Event</span>
             <span className="text-cyan-500">Breakers</span>
-          </div>
+          </Link>
           <div className="space-x-4">
             <Link to='/'>
               <button className="bg-cyan-500 font-bold px-4 py-1 rounded-md text-sm text-white cursor-pointer hover:bg-cyan-600">
