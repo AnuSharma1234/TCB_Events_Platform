@@ -91,7 +91,7 @@ export default function Home() {
                   {/* Action Buttons */}
                   <div className="flex gap-3">
                     <Link to='/register'>
-                      <button className="bg-cyan-400 hover:bg-cyan-500 text-gray-900 px-5 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer">
+                      <button className="bg-cyan-500 hover:bg-cyan-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition-colors cursor-pointer">
                         Register
                       </button>
                     </Link>
